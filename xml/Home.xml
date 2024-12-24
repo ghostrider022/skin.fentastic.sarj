@@ -91,7 +91,7 @@
 							<param name="list_id" value="19100"/>
 						</include>
 						<include content="WidgetListBigPoster" condition="Library.HasContent(movies)">
-							<param name="content_path" value="special://skin/playlists/unwatched_movies.xsp"/>
+							<param name="content_path" value="special://skin/playlists/sarjsandhu-amzon-prime-india-movies.xsp"/>
 							<param name="widget_header" value="$LOCALIZE[31007]"/>
 							<param name="widget_target" value="videos"/>
 							<param name="list_id" value="19300"/>
