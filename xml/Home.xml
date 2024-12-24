@@ -92,6 +92,12 @@
 					<include content="WidgetScrollbar" condition="Skin.HasSetting(touchmode)">
 						<param name="scrollbar_id" value="22099"/>
 					</include>
+					<include content="WidgetListPoster" condition="Library.HasContent(movies)">
+							<param name="content_path" value="special://skin/playlists/random_movies.xsp"/>
+							<param name="widget_header" value="$LOCALIZE[31006]"/>
+							<param name="widget_target" value="videos"/>
+							<param name="list_id" value="5400"/>
+						</include>
 				</control>
 				<!-- CUSTOM 1 -->
 				<control type="group" id="23000">
