@@ -1,0 +1,2647 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+-<window>
+
+<defaultcontrol>9000</defaultcontrol>
+
+<backgroundcolor>background</backgroundcolor>
+
+<onload condition="!Skin.HasSetting(firsttimerun)">ActivateWindow(1112)</onload>
+
+<onload condition="Skin.HasSetting(firsttimerun)">RunScript(script.fentastic.helper,mode=check_for_update&skin_id=skin.fentastic)</onload>
+
+<onload>RunScript(script.fentastic.helper,mode=check_for_profile_change&skin_id=skin.fentastic)</onload>
+
+<onload condition="String.IsEmpty(Window(Home).Property(fentastic.starting_widgets))">RunScript(script.fentastic.helper,mode=starting_widgets)</onload>
+
+<onload condition="String.IsEmpty(Window(Home).Property(fentastic.starting_widgets))">SetProperty(fentastic.starting_widgets,true)</onload>
+
+<onload>RunScript(script.fentastic.helper,mode=modify_keymap)</onload>
+
+<onload>RunScript(script.fentastic.helper,mode=fix_black_screen)</onload>
+
+<onload condition="String.IsEmpty(Skin.String(current_search_provider))">Skin.SetString(current_search_provider,0)</onload>
+
+<onload condition="String.IsEmpty(Skin.String(DefaultBackgroundBrightness))">Skin.SetString(DefaultBackgroundBrightness,Medium)</onload>
+
+<onload condition="String.IsEmpty(Skin.String(DefaultFanartBrightness))">Skin.SetString(DefaultFanartBrightness,Medium)</onload>
+
+
+-<controls>
+
+<include>DefaultBackground</include>
+
+
+-<control type="multiimage">
+
+<depth>DepthBackground</depth>
+
+<include>FullScreenDimensions</include>
+
+<aspectratio>scale</aspectratio>
+
+<fadetime>600</fadetime>
+
+<animation condition="Integer.IsGreater(System.StereoscopicMode,0)" time="0" end="102,102" center="auto" effect="zoom">conditional</animation>
+
+<animation time="400" end="100" effect="fade" start="0">WindowOpen</animation>
+
+<animation time="300" end="0" effect="fade" start="100">WindowClose</animation>
+
+<animation time="400" effect="fade">VisibleChange</animation>
+
+<imagepath colordiffuse="bg_overlay" background="true">$VAR[HomeFanartVar]</imagepath>
+
+<visible>!Player.HasMedia</visible>
+
+</control>
+
+
+-<control type="group">
+
+<animation condition="$EXP[infodialog_active]" time="200" end="0" effect="fade" start="100" tween="sine">Conditional</animation>
+
+<!-- WIDGETS GROUP -->
+
+
+
+-<control type="group" id="2000">
+
+<left>462</left>
+
+<include>OpenClose_Right</include>
+
+<visible>!Skin.HasSetting(TrailerPlaying)</visible>
+
+<animation time="700" end="0,0" effect="slide" start="1380,0" tween="sine" easing="inout">VisibleChange</animation>
+
+
+-<control type="group" id="27000">
+
+<visible>false</visible>
+
+
+-<include content="Visible_Right_Delayed">
+
+<param value="addons" name="id"/>
+
+</include>
+
+
+-<control type="grouplist" id="27001">
+
+<include>WidgetGroupListCommon</include>
+
+<pagecontrol>27010</pagecontrol>
+
+
+-<include content="WidgetListSquare">
+
+<param value="addons://sources/video/" name="content_path"/>
+
+<param value="$LOCALIZE[1037]" name="widget_header"/>
+
+<param value="videos" name="widget_target"/>
+
+<param value="lastused" name="sortby"/>
+
+<param value="descending" name="sortorder"/>
+
+<param value="27100" name="list_id"/>
+
+<param value="DefaultAddon.png" name="fallback_icon"/>
+
+</include>
+
+
+-<include content="WidgetListSquare">
+
+<param value="addons://sources/executable/" name="content_path"/>
+
+<param value="$LOCALIZE[1043]" name="widget_header"/>
+
+<param value="programs" name="widget_target"/>
+
+<param value="lastused" name="sortby"/>
+
+<param value="descending" name="sortorder"/>
+
+<param value="27300" name="list_id"/>
+
+<param value="DefaultAddon.png" name="fallback_icon"/>
+
+</include>
+
+</control>
+
+</control>
+
+<!-- MOVIES -->
+
+
+
+-<control type="group" id="19000">
+
+<visible>String.IsEqual(Container(9000).ListItem.Property(id),movies)</visible>
+
+
+-<include content="Visible_Right_Delayed">
+
+<param value="movies" name="id"/>
+
+</include>
+
+
+-<control type="grouplist" id="19001">
+
+<include>WidgetGroupListCommon</include>
+
+<pagecontrol>19090</pagecontrol>
+
+
+-<include condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_categories_widget)" content="WidgetListCategories">
+
+<param value="library://video/movies/" name="content_path"/>
+
+<param value="$LOCALIZE[31148]" name="widget_header"/>
+
+<param value="videos" name="widget_target"/>
+
+<param value="19900" name="list_id"/>
+
+</include>
+
+
+-<include condition="Library.HasContent(movies)" content="WidgetListPoster">
+
+<param value="special://skin/playlists/inprogress_movies.xsp" name="content_path"/>
+
+<param value="$LOCALIZE[31010]" name="widget_header"/>
+
+<param value="videos" name="widget_target"/>
+
+<param value="19100" name="list_id"/>
+
+</include>
+
+
+-<include condition="Library.HasContent(movies)" content="WidgetListPoster">
+
+<param value="special://skin/playlists/recent_unwatched_movies.xsp" name="content_path"/>
+
+<param value="$LOCALIZE[20386]" name="widget_header"/>
+
+<param value="videos" name="widget_target"/>
+
+<param value="19200" name="list_id"/>
+
+</include>
+
+
+-<include condition="Library.HasContent(movies)" content="WidgetListPoster">
+
+<param value="special://skin/playlists/unwatched_movies.xsp" name="content_path"/>
+
+<param value="$LOCALIZE[31007]" name="widget_header"/>
+
+<param value="videos" name="widget_target"/>
+
+<param value="19300" name="list_id"/>
+
+</include>
+
+
+-<include condition="Library.HasContent(movies)" content="WidgetListPoster">
+
+<param value="special://skin/playlists/random_movies.xsp" name="content_path"/>
+
+<param value="$LOCALIZE[31006]" name="widget_header"/>
+
+<param value="videos" name="widget_target"/>
+
+<param value="19400" name="list_id"/>
+
+</include>
+
+
+-<include condition="Library.HasContent(movies)" content="WidgetListCategories">
+
+<param value="videodb://movies/genres/" name="content_path"/>
+
+<param value="$LOCALIZE[135]" name="widget_header"/>
+
+<param value="videos" name="widget_target"/>
+
+<param value="19500" name="list_id"/>
+
+<param value="$VAR[WidgetGenreIconVar]" name="icon"/>
+
+<param value="70" name="icon_height"/>
+
+</include>
+
+
+-<include condition="Library.HasContent(movies)" content="WidgetListPoster">
+
+<param value="videodb://movies/sets/" name="content_path"/>
+
+<param value="$LOCALIZE[31075]" name="widget_header"/>
+
+<param value="videos" name="widget_target"/>
+
+<param value="random" name="sortby"/>
+
+<param value="19600" name="list_id"/>
+
+</include>
+
+</control>
+
+
+-<include condition="!Library.HasContent(movies)" content="ImageWidget">
+
+<param value="$LOCALIZE[31104]" name="text_label"/>
+
+<param value="$LOCALIZE[31110]" name="button_label"/>
+
+<param value="ActivateWindow(videos,files,return)" name="button_onclick"/>
+
+<param value="19500" name="button_id"/>
+
+<param value="Skin.SetBool(HomeMenuNoMovieButton)" name="button2_onclick"/>
+
+</include>
+
+
+-<include condition="Skin.HasSetting(touchmode)" content="WidgetScrollbar">
+
+<param value="19090" name="scrollbar_id"/>
+
+</include>
+
+</control>
+
+<!-- TV SHOWS -->
+
+
+
+-<control type="group" id="22000">
+
+<visible>String.IsEqual(Container(9000).ListItem.Property(id),tvshows)</visible>
+
+
+-<include content="Visible_Right_Delayed">
+
+<param value="tvshows" name="id"/>
+
+</include>
+
+
+-<control type="grouplist" id="22001">
+
+<include>WidgetGroupListCommon</include>
+
+<pagecontrol>22099</pagecontrol>
+
+<include condition="!Skin.HasSetting(HomeMenuNoTVShowsButton)" content="TVShowWidgets"/>
+
+</control>
+
+
+-<include condition="Skin.HasSetting(touchmode)" content="WidgetScrollbar">
+
+<param value="22099" name="scrollbar_id"/>
+
+</include>
+
+</control>
+
+<!-- CUSTOM 1 -->
+
+
+
+-<control type="group" id="23000">
+
+<visible>String.IsEqual(Container(9000).ListItem.Property(id),custom1)</visible>
+
+
+-<include content="Visible_Right_Delayed">
+
+<param value="custom1" name="id"/>
+
+</include>
+
+
+-<control type="grouplist" id="23001">
+
+<include>WidgetGroupListCommon</include>
+
+<pagecontrol>23099</pagecontrol>
+
+<include condition="!Skin.HasSetting(HomeMenuNoCustom1Button)" content="Custom1Widgets"/>
+
+</control>
+
+
+-<include condition="Skin.HasSetting(touchmode)" content="WidgetScrollbar">
+
+<param value="23099" name="scrollbar_id"/>
+
+</include>
+
+</control>
+
+<!-- CUSTOM 2 -->
+
+
+
+-<control type="group" id="24000">
+
+<visible>String.IsEqual(Container(9000).ListItem.Property(id),custom2)</visible>
+
+
+-<include content="Visible_Right_Delayed">
+
+<param value="custom2" name="id"/>
+
+</include>
+
+
+-<control type="grouplist" id="24001">
+
+<include>WidgetGroupListCommon</include>
+
+<pagecontrol>24099</pagecontrol>
+
+<include condition="!Skin.HasSetting(HomeMenuNoCustom2Button)" content="Custom2Widgets"/>
+
+</control>
+
+
+-<include condition="Skin.HasSetting(touchmode)" content="WidgetScrollbar">
+
+<param value="24099" name="scrollbar_id"/>
+
+</include>
+
+</control>
+
+<!-- CUSTOM 3 -->
+
+
+
+-<control type="group" id="25000">
+
+<visible>String.IsEqual(Container(9000).ListItem.Property(id),custom3)</visible>
+
+
+-<include content="Visible_Right_Delayed">
+
+<param value="custom3" name="id"/>
+
+</include>
+
+
+-<control type="grouplist" id="25001">
+
+<include>WidgetGroupListCommon</include>
+
+<pagecontrol>25099</pagecontrol>
+
+<include condition="!Skin.HasSetting(HomeMenuNoCustom3Button)" content="Custom3Widgets"/>
+
+</control>
+
+
+-<include condition="Skin.HasSetting(touchmode)" content="WidgetScrollbar">
+
+<param value="25099" name="scrollbar_id"/>
+
+</include>
+
+</control>
+
+
+-<control type="group" id="7000">
+
+<visible>String.IsEqual(Container(9000).ListItem.Property(id),music)</visible>
+
+
+-<include content="Visible_Right_Delayed">
+
+<param value="music" name="id"/>
+
+</include>
+
+
+-<control type="grouplist" id="7001">
+
+<include>WidgetGroupListCommon</include>
+
+<pagecontrol>7010</pagecontrol>
+
+
+-<include condition="Library.HasContent(music) + !Skin.HasSetting(home_no_categories_widget)" content="WidgetListCategory">
+
+<param value="library://music/" name="content_path"/>
+
+<param value="$LOCALIZE[31148]" name="widget_header"/>
+
+<param value="music" name="widget_target"/>
+
+<param value="7900" name="list_id"/>
+
+</include>
+
+
+-<include condition="Library.HasContent(music)" content="WidgetListSquare">
+
+<param value="musicdb://recentlyplayedalbums" name="content_path"/>
+
+<param value="$LOCALIZE[517]" name="widget_header"/>
+
+<param value="music" name="widget_target"/>
+
+<param value="7100" name="list_id"/>
+
+<param value="DefaultMusicAlbums.png" name="fallback_icon"/>
+
+<param value="true" name="onclick_condition"/>
+
+<param value="$VAR[AlbumOnClickActionVar]" name="onclick_action"/>
+
+</include>
+
+
+-<include condition="Library.HasContent(music)" content="WidgetListSquare">
+
+<param value="musicdb://recentlyaddedalbums/" name="content_path"/>
+
+<param value="$LOCALIZE[359]" name="widget_header"/>
+
+<param value="music" name="widget_target"/>
+
+<param value="7200" name="list_id"/>
+
+<param value="DefaultMusicAlbums.png" name="fallback_icon"/>
+
+<param value="true" name="onclick_condition"/>
+
+<param value="$VAR[AlbumOnClickActionVar]" name="onclick_action"/>
+
+</include>
+
+
+-<include condition="Library.HasContent(music)" content="WidgetListSquare">
+
+<param value="special://skin/playlists/random_albums.xsp" name="content_path"/>
+
+<param value="$LOCALIZE[31012]" name="widget_header"/>
+
+<param value="music" name="widget_target"/>
+
+<param value="7300" name="list_id"/>
+
+<param value="DefaultMusicAlbums.png" name="fallback_icon"/>
+
+<param value="true" name="onclick_condition"/>
+
+<param value="$VAR[AlbumOnClickActionVar]" name="onclick_action"/>
+
+</include>
+
+
+-<include condition="Library.HasContent(music)" content="WidgetListSquare">
+
+<param value="special://skin/playlists/random_artists.xsp" name="content_path"/>
+
+<param value="$LOCALIZE[31013]" name="widget_header"/>
+
+<param value="music" name="widget_target"/>
+
+<param value="7400" name="list_id"/>
+
+<param value="DefaultMusicArtists.png" name="fallback_icon"/>
+
+</include>
+
+
+-<include condition="Library.HasContent(music)" content="WidgetListSquare">
+
+<param value="special://skin/playlists/unplayed_albums.xsp" name="content_path"/>
+
+<param value="$LOCALIZE[31014]" name="widget_header"/>
+
+<param value="music" name="widget_target"/>
+
+<param value="7500" name="list_id"/>
+
+<param value="DefaultMusicAlbums.png" name="fallback_icon"/>
+
+<param value="true" name="onclick_condition"/>
+
+<param value="$VAR[AlbumOnClickActionVar]" name="onclick_action"/>
+
+</include>
+
+
+-<include condition="Library.HasContent(music)" content="WidgetListSquare">
+
+<param value="special://skin/playlists/mostplayed_albums.xsp" name="content_path"/>
+
+<param value="$LOCALIZE[31011]" name="widget_header"/>
+
+<param value="music" name="widget_target"/>
+
+<param value="7600" name="list_id"/>
+
+<param value="DefaultMusicAlbums.png" name="fallback_icon"/>
+
+<param value="playcount" name="sortby"/>
+
+<param value="descending" name="sortorder"/>
+
+<param value="true" name="onclick_condition"/>
+
+<param value="$VAR[AlbumOnClickActionVar]" name="onclick_action"/>
+
+</include>
+
+</control>
+
+
+-<include condition="!Library.HasContent(music)" content="ImageWidget">
+
+<param name="left">50</param>
+
+<param value="$LOCALIZE[31104]" name="text_label"/>
+
+<param value="$LOCALIZE[31110]" name="button_label"/>
+
+<param value="ActivateWindow(music,files)" name="button_onclick"/>
+
+<param value="7600" name="button_id"/>
+
+<param value="Skin.SetBool(HomeMenuNoMusicButton)" name="button2_onclick"/>
+
+</include>
+
+
+-<include condition="Skin.HasSetting(touchmode)" content="WidgetScrollbar">
+
+<param value="7010" name="scrollbar_id"/>
+
+</include>
+
+</control>
+
+
+-<control type="group" id="8000">
+
+<visible>String.IsEqual(Container(9000).ListItem.Property(id),addons)</visible>
+
+
+-<include content="Visible_Right_Delayed">
+
+<param value="addons" name="id"/>
+
+</include>
+
+
+-<control type="grouplist" id="8001">
+
+<include>WidgetGroupListCommon</include>
+
+<pagecontrol>8010</pagecontrol>
+
+
+-<include condition="!Skin.HasSetting(home_no_categories_widget)" content="WidgetListCategory">
+
+<param value="addons://" name="content_path"/>
+
+<param value="$LOCALIZE[31148]" name="widget_header"/>
+
+<param value="addonbrowser" name="widget_target"/>
+
+<param value="8900" name="list_id"/>
+
+<param value="Integer.IsGreater(Container(8100).NumItems,0) | Integer.IsGreater(Container(8200).NumItems,0) | Integer.IsGreater(Container(8300).NumItems,0) | Integer.IsGreater(Container(8400).NumItems,0) | Integer.IsGreater(Container(8500).NumItems,0) | Integer.IsGreater(Container(8700).NumItems,0)" name="visible"/>
+
+</include>
+
+
+-<include content="WidgetListSquare">
+
+<param value="addons://sources/video/" name="content_path"/>
+
+<param value="$LOCALIZE[1037]" name="widget_header"/>
+
+<param value="videos" name="widget_target"/>
+
+<param value="lastused" name="sortby"/>
+
+<param value="descending" name="sortorder"/>
+
+<param value="8100" name="list_id"/>
+
+<param value="DefaultAddon.png" name="fallback_icon"/>
+
+</include>
+
+
+-<include content="WidgetListSquare">
+
+<param value="addons://sources/audio/" name="content_path"/>
+
+<param value="$LOCALIZE[1038]" name="widget_header"/>
+
+<param value="music" name="widget_target"/>
+
+<param value="lastused" name="sortby"/>
+
+<param value="descending" name="sortorder"/>
+
+<param value="8200" name="list_id"/>
+
+<param value="DefaultAddon.png" name="fallback_icon"/>
+
+</include>
+
+
+-<include content="WidgetListSquare">
+
+<param value="addons://sources/game/" name="content_path"/>
+
+<param value="$LOCALIZE[35049]" name="widget_header"/>
+
+<param value="games" name="widget_target"/>
+
+<param value="lastused" name="sortby"/>
+
+<param value="descending" name="sortorder"/>
+
+<param value="8700" name="list_id"/>
+
+<param value="DefaultAddonGame.png" name="fallback_icon"/>
+
+<param value="System.GetBool(gamesgeneral.enable)" name="visible"/>
+
+</include>
+
+
+-<include content="WidgetListSquare">
+
+<param value="addons://sources/executable/" name="content_path"/>
+
+<param value="$LOCALIZE[1043]" name="widget_header"/>
+
+<param value="programs" name="widget_target"/>
+
+<param value="lastused" name="sortby"/>
+
+<param value="descending" name="sortorder"/>
+
+<param value="8300" name="list_id"/>
+
+<param value="DefaultAddon.png" name="fallback_icon"/>
+
+</include>
+
+
+-<include condition="System.Platform.Android" content="WidgetListSquare">
+
+<param value="androidapp://sources/apps/" name="content_path"/>
+
+<param value="$LOCALIZE[20244]" name="widget_header"/>
+
+<param value="programs" name="widget_target"/>
+
+<param value="lastused" name="sortby"/>
+
+<param value="descending" name="sortorder"/>
+
+<param value="8400" name="list_id"/>
+
+<param value="DefaultAddon.png" name="fallback_icon"/>
+
+</include>
+
+
+-<include content="WidgetListSquare">
+
+<param value="addons://sources/image/" name="content_path"/>
+
+<param value="$LOCALIZE[1039]" name="widget_header"/>
+
+<param value="pictures" name="widget_target"/>
+
+<param value="lastused" name="sortby"/>
+
+<param value="descending" name="sortorder"/>
+
+<param value="8500" name="list_id"/>
+
+</include>
+
+</control>
+
+
+-<include content="ImageWidget">
+
+<param value="$LOCALIZE[31119]" name="text_label"/>
+
+<param name="left">50</param>
+
+<param value="$LOCALIZE[31118]" name="button_label"/>
+
+<param value="ActivateWindow(addonbrowser)" name="button_onclick"/>
+
+<param value="8600" name="button_id"/>
+
+<param value="!Integer.IsGreater(Container(8001).NumItems,0)" name="visible"/>
+
+<param value="Skin.SetBool(HomeMenuNoProgramsButton)" name="button2_onclick"/>
+
+</include>
+
+
+-<include condition="Skin.HasSetting(touchmode)" content="WidgetScrollbar">
+
+<param value="8010" name="scrollbar_id"/>
+
+</include>
+
+</control>
+
+
+-<control type="group" id="11000">
+
+<visible>String.IsEqual(Container(9000).ListItem.Property(id),video)</visible>
+
+
+-<include content="Visible_Right_Delayed">
+
+<param value="video" name="id"/>
+
+</include>
+
+
+-<control type="grouplist" id="11001">
+
+<include>WidgetGroupListCommon</include>
+
+<pagecontrol>11010</pagecontrol>
+
+
+-<include content="WidgetListCategory">
+
+<param value="library://video/" name="content_path"/>
+
+<param value="$LOCALIZE[31148]" name="widget_header"/>
+
+<param value="videos" name="widget_target"/>
+
+<param value="11900" name="list_id"/>
+
+</include>
+
+
+-<include content="WidgetListCategory">
+
+<param value="sources://video/" name="content_path"/>
+
+<param value="$LOCALIZE[20094]" name="widget_header"/>
+
+<param value="videos" name="widget_target"/>
+
+<param value="11100" name="list_id"/>
+
+</include>
+
+
+-<include content="WidgetListCategory">
+
+<param value="special://videoplaylists/" name="content_path"/>
+
+<param value="$LOCALIZE[136]" name="widget_header"/>
+
+<param value="videos" name="widget_target"/>
+
+<param value="11200" name="list_id"/>
+
+<param value="DefaultPlaylist.png" name="icon"/>
+
+</include>
+
+</control>
+
+
+-<include content="ImageWidget">
+
+<param value="$LOCALIZE[31105]" name="text_label"/>
+
+<param name="left">50</param>
+
+<param value="$LOCALIZE[31110]" name="button_label"/>
+
+<param value="ActivateWindow(videos,root)" name="button_onclick"/>
+
+<param value="11300" name="button_id"/>
+
+<param value="!Integer.IsGreater(Container(11001).NumItems,0)" name="visible"/>
+
+<param value="Skin.SetBool(HomeMenuNoVideosButton)" name="button2_onclick"/>
+
+</include>
+
+
+-<include condition="Skin.HasSetting(touchmode)" content="WidgetScrollbar">
+
+<param value="11010" name="scrollbar_id"/>
+
+</include>
+
+</control>
+
+
+-<control type="group" id="12000">
+
+<visible>String.IsEqual(Container(9000).ListItem.Property(id),livetv)</visible>
+
+
+-<include content="Visible_Right_Delayed">
+
+<param value="livetv" name="id"/>
+
+</include>
+
+
+-<control type="grouplist" id="12001">
+
+<include>WidgetGroupListCommon</include>
+
+<pagecontrol>12010</pagecontrol>
+
+
+-<include condition="System.HasPVRAddon + !Skin.HasSetting(home_no_categories_widget)" content="WidgetListCategory">
+
+<param value="pvr://tv/" name="content_path"/>
+
+<param value="$LOCALIZE[31148]" name="widget_header"/>
+
+<param value="12900" name="list_id"/>
+
+</include>
+
+
+-<include condition="System.HasPVRAddon" content="WidgetListPVR">
+
+<param value="pvr://channels/tv/*?view=lastplayed" name="content_path"/>
+
+<param value="lastplayed" name="sortby"/>
+
+<param value="descending" name="sortorder"/>
+
+<param value="$LOCALIZE[31016]" name="widget_header"/>
+
+<param value="15" name="item_limit"/>
+
+<param value="12200" name="list_id"/>
+
+<param value="5000" name="info_update"/>
+
+</include>
+
+
+-<include condition="System.HasPVRAddon" content="WidgetListPVR">
+
+<param value="pvr://recordings/tv/active?view=flat" name="content_path"/>
+
+<param value="date" name="sortby"/>
+
+<param value="descending" name="sortorder"/>
+
+<param value="$LOCALIZE[31015]" name="widget_header"/>
+
+<param value="15" name="item_limit"/>
+
+<param value="12300" name="list_id"/>
+
+<param value="$INFO[ListItem.Title]$INFO[ListItem.Date, (,)]" name="label"/>
+
+<param value="$VAR[SeasonEpisodeLabel]$INFO[ListItem.EpisodeName]" name="label2"/>
+
+</include>
+
+
+-<include condition="System.HasPVRAddon" content="WidgetListPVR">
+
+<param value="pvr://timers/tv/timers/?view=hidedisabled" name="content_path"/>
+
+<param value="ascending" name="sortorder"/>
+
+<param value="date" name="sortby"/>
+
+<param value="$LOCALIZE[19040]" name="widget_header"/>
+
+<param value="tvtimers" name="widget_target"/>
+
+<param value="15" name="item_limit"/>
+
+<param value="12400" name="list_id"/>
+
+<param value="$INFO[ListItem.Title]$INFO[ListItem.Date, (,)]" name="label"/>
+
+<param value="$VAR[SeasonEpisodeLabel]$INFO[ListItem.EpisodeName]" name="label2"/>
+
+</include>
+
+
+-<include condition="System.HasPVRAddon" content="WidgetListPVR">
+
+<param value="pvr://channels/tv" name="content_path"/>
+
+<param value="$LOCALIZE[19173]" name="widget_header"/>
+
+<param value="tvguide" name="widget_target"/>
+
+<param value="12500" name="list_id"/>
+
+<param value="1" name="item_treshold"/>
+
+</include>
+
+
+-<include condition="System.HasPVRAddon" content="WidgetListPVR">
+
+<param value="pvr://search/tv/savedsearches" name="content_path"/>
+
+<param value="descending" name="sortorder"/>
+
+<param value="date" name="sortby"/>
+
+<param value="$LOCALIZE[19337]" name="widget_header"/>
+
+<param value="tvsearch" name="widget_target"/>
+
+<param value="12600" name="list_id"/>
+
+</include>
+
+</control>
+
+
+-<include condition="!System.HasPVRAddon" content="ImageWidget">
+
+<param name="left">50</param>
+
+<param value="$LOCALIZE[31143]" name="text_label"/>
+
+<param value="$LOCALIZE[31144]" name="button_label"/>
+
+<param value="ActivateWindow(addonbrowser,addons://default_binary_addons_source/kodi.pvrclient,return)" name="button_onclick"/>
+
+<param value="12400" name="button_id"/>
+
+<param value="Skin.SetBool(HomeMenuNoTVButton)" name="button2_onclick"/>
+
+</include>
+
+
+-<include condition="Skin.HasSetting(touchmode)" content="WidgetScrollbar">
+
+<param value="12010" name="scrollbar_id"/>
+
+</include>
+
+</control>
+
+
+-<control type="group" id="13000">
+
+<visible>String.IsEqual(Container(9000).ListItem.Property(id),radio)</visible>
+
+
+-<include content="Visible_Right_Delayed">
+
+<param value="radio" name="id"/>
+
+</include>
+
+
+-<control type="grouplist" id="13001">
+
+<include>WidgetGroupListCommon</include>
+
+<pagecontrol>13010</pagecontrol>
+
+
+-<include condition="System.HasPVRAddon" content="WidgetListCategory">
+
+<param value="pvr://radio/" name="content_path"/>
+
+<param value="$LOCALIZE[31148]" name="widget_header"/>
+
+<param value="13900" name="list_id"/>
+
+</include>
+
+
+-<include condition="System.HasPVRAddon" content="WidgetListPVR">
+
+<param value="pvr://channels/radio/*?view=lastplayed" name="content_path"/>
+
+<param value="lastplayed" name="sortby"/>
+
+<param value="descending" name="sortorder"/>
+
+<param value="$LOCALIZE[31018]" name="widget_header"/>
+
+<param value="15" name="item_limit"/>
+
+<param value="13200" name="list_id"/>
+
+<param value="5000" name="info_update"/>
+
+</include>
+
+
+-<include condition="System.HasPVRAddon" content="WidgetListPVR">
+
+<param value="pvr://recordings/radio/active?view=flat" name="content_path"/>
+
+<param value="date" name="sortby"/>
+
+<param value="descending" name="sortorder"/>
+
+<param value="$LOCALIZE[31015]" name="widget_header"/>
+
+<param value="15" name="item_limit"/>
+
+<param value="13300" name="list_id"/>
+
+<param value="$INFO[ListItem.Title]$INFO[ListItem.Date, (,)]" name="label"/>
+
+<param value="$VAR[SeasonEpisodeLabel]$INFO[ListItem.EpisodeName]" name="label2"/>
+
+</include>
+
+
+-<include condition="System.HasPVRAddon" content="WidgetListPVR">
+
+<param value="pvr://timers/radio/timers/?view=hidedisabled" name="content_path"/>
+
+<param value="ascending" name="sortorder"/>
+
+<param value="date" name="sortby"/>
+
+<param value="$LOCALIZE[19040]" name="widget_header"/>
+
+<param value="radiotimers" name="widget_target"/>
+
+<param value="15" name="item_limit"/>
+
+<param value="13400" name="list_id"/>
+
+<param value="$INFO[ListItem.Title]$INFO[ListItem.Date, (,)]" name="label"/>
+
+<param value="$VAR[SeasonEpisodeLabel]$INFO[ListItem.EpisodeName]" name="label2"/>
+
+</include>
+
+
+-<include condition="System.HasPVRAddon" content="WidgetListPVR">
+
+<param value="pvr://channels/radio" name="content_path"/>
+
+<param value="$LOCALIZE[19174]" name="widget_header"/>
+
+<param value="radioguide" name="widget_target"/>
+
+<param value="13500" name="list_id"/>
+
+<param value="1" name="item_treshold"/>
+
+</include>
+
+
+-<include condition="System.HasPVRAddon" content="WidgetListPVR">
+
+<param value="pvr://search/radio/savedsearches" name="content_path"/>
+
+<param value="descending" name="sortorder"/>
+
+<param value="date" name="sortby"/>
+
+<param value="$LOCALIZE[19337]" name="widget_header"/>
+
+<param value="radiosearch" name="widget_target"/>
+
+<param value="13600" name="list_id"/>
+
+</include>
+
+</control>
+
+
+-<include condition="!System.HasPVRAddon" content="ImageWidget">
+
+<param value="$LOCALIZE[31143]" name="text_label"/>
+
+<param name="left">50</param>
+
+<param value="$LOCALIZE[31144]" name="button_label"/>
+
+<param value="ActivateWindow(addonbrowser,addons://default_binary_addons_source/kodi.pvrclient,return)" name="button_onclick"/>
+
+<param value="13400" name="button_id"/>
+
+<param value="Skin.SetBool(HomeMenuNoRadioButton)" name="button2_onclick"/>
+
+</include>
+
+
+-<include condition="Skin.HasSetting(touchmode)" content="WidgetScrollbar">
+
+<param value="13010" name="scrollbar_id"/>
+
+</include>
+
+</control>
+
+
+-<control type="group" id="14000">
+
+<visible>String.IsEqual(Container(9000).ListItem.Property(id),favorites)</visible>
+
+
+-<include content="Visible_Right_Delayed">
+
+<param value="favorites" name="id"/>
+
+</include>
+
+
+-<control type="panel" id="14100">
+
+<left>33</left>
+
+<top>0</top>
+
+<right>0</right>
+
+<bottom>0</bottom>
+
+<onleft>9000</onleft>
+
+<onright>9000</onright>
+
+<onup>14100</onup>
+
+<ondown>14100</ondown>
+
+<preloaditems>2</preloaditems>
+
+<scrolltime tween="cubic" easing="out">500</scrolltime>
+
+<orientation>vertical</orientation>
+
+<pagecontrol>14010</pagecontrol>
+
+<visible>Integer.IsGreater(Container(14100).NumItems,0) | Container(14100).IsUpdating</visible>
+
+
+-<itemlayout height="365" width="280">
+
+
+-<control type="group">
+
+<top>130</top>
+
+
+-<include content="InfoWallMusicLayout">
+
+<param value="DefaultFavourites.png" name="fallback_image"/>
+
+<param value="14100" name="list_id"/>
+
+<param value="false" name="focused"/>
+
+</include>
+
+</control>
+
+</itemlayout>
+
+
+-<focusedlayout height="365" width="280">
+
+
+-<control type="group">
+
+<depth>DepthContentPopout</depth>
+
+<top>130</top>
+
+
+-<include content="InfoWallMusicLayout">
+
+<param value="DefaultFavourites.png" name="fallback_image"/>
+
+<param value="14100" name="list_id"/>
+
+<param value="true" name="focused"/>
+
+</include>
+
+</control>
+
+</focusedlayout>
+
+<content>favourites://</content>
+
+</control>
+
+
+-<include content="ImageWidget">
+
+<param value="$LOCALIZE[31025]" name="text_label"/>
+
+<param value="$LOCALIZE[31116]" name="button_label"/>
+
+<param name="left">50</param>
+
+<param value="" name="button_onclick"/>
+
+<param value="5500" name="button_id"/>
+
+<param value="!Integer.IsGreater(Container(14100).NumItems,0) + !Container(14100).IsUpdating" name="visible"/>
+
+<param value="false" name="visible_1"/>
+
+<param value="Skin.SetBool(HomeMenuNoFavButton)" name="button2_onclick"/>
+
+</include>
+
+
+-<include condition="Skin.HasSetting(touchmode)" content="WidgetScrollbar">
+
+<param value="14010" name="scrollbar_id"/>
+
+</include>
+
+</control>
+
+
+-<control type="group" id="15000">
+
+<visible>String.IsEqual(Container(9000).ListItem.Property(id),weather)</visible>
+
+
+-<include content="Visible_Right_Delayed">
+
+<param value="weather" name="id"/>
+
+</include>
+
+
+-<control type="grouplist" id="15001">
+
+<include>WidgetGroupListCommon</include>
+
+<pagecontrol>15010</pagecontrol>
+
+
+-<control type="group" id="16678">
+
+<description>Weather info</description>
+
+<left>68</left>
+
+<right>70</right>
+
+<top>102</top>
+
+<height>360</height>
+
+<visible>!String.IsEmpty(Weather.plugin)</visible>
+
+
+-<control type="image">
+
+<top>20</top>
+
+<left>20</left>
+
+<height>220</height>
+
+<bottom>90</bottom>
+
+<width>97%</width>
+
+<texture colordiffuse="button_focus2" border="21">masks/settingspanel-unfocused.png</texture>
+
+</control>
+
+
+-<control type="label">
+
+<left>840</left>
+
+<top>60</top>
+
+<aligny>center</aligny>
+
+<height>24</height>
+
+<right>60</right>
+
+<align>right</align>
+
+<font>font30_title</font>
+
+<label>$INFO[Weather.Location]</label>
+
+<textcolor>unfocused_text</textcolor>
+
+</control>
+
+
+-<control type="label">
+
+<left>840</left>
+
+<top>120</top>
+
+<aligny>center</aligny>
+
+<height>24</height>
+
+<right>60</right>
+
+<align>right</align>
+
+<font>font14</font>
+
+<label>$INFO[Weather.Conditions]</label>
+
+<textcolor>unfocused_text</textcolor>
+
+</control>
+
+
+-<control type="label">
+
+<left>840</left>
+
+<top>180</top>
+
+<aligny>center</aligny>
+
+<height>24</height>
+
+<right>60</right>
+
+<align>right</align>
+
+<font>font14</font>
+
+<label>$INFO[Weather.Temperature]</label>
+
+<textcolor>unfocused_text</textcolor>
+
+</control>
+
+
+-<control type="grouplist">
+
+<top>50</top>
+
+<left>50</left>
+
+<right>20</right>
+
+<orientation>horizontal</orientation>
+
+<align>left</align>
+
+<itemgap>-110</itemgap>
+
+
+-<include condition="!String.IsEmpty(Weather.Plugin)" content="WeatherIconHome">
+
+<param value="Window(weather).Property(Current.Wind)" name="label"/>
+
+<param value="icons/weather/wind.png" name="texture"/>
+
+<param value="404" name="header"/>
+
+</include>
+
+
+-<include condition="!String.IsEmpty(Weather.Plugin)" content="WeatherIconHome">
+
+<param value="Window(weather).Property(Current.Humidity)" name="label"/>
+
+<param value="icons/weather/humidity.png" name="texture"/>
+
+<param value="406" name="header"/>
+
+</include>
+
+
+-<include condition="!String.IsEmpty(Weather.Plugin)" content="WeatherIconHome">
+
+<param value="Window(weather).Property(Current.Precipitation)" name="label"/>
+
+<param value="icons/weather/rain.png" name="texture"/>
+
+<param value="33021" name="header"/>
+
+</include>
+
+
+-<include condition="!String.IsEmpty(Weather.Plugin)" content="WeatherIconHome">
+
+<param value="Window(weather).Property(Today.Sunrise)" name="label"/>
+
+<param value="icons/weather/sunrise.png" name="texture"/>
+
+<param value="405" name="header"/>
+
+</include>
+
+
+-<include condition="!String.IsEmpty(Weather.Plugin)" content="WeatherIconHome">
+
+<param value="Window(weather).Property(Today.Sunset)" name="label"/>
+
+<param value="icons/weather/sunset.png" name="texture"/>
+
+<param value="403" name="header"/>
+
+</include>
+
+</control>
+
+</control>
+
+
+-<include condition="!String.IsEmpty(Weather.Plugin)" content="WeatherWidget">
+
+<param value="DailyItems" name="content_include"/>
+
+<param value="15200" name="list_id"/>
+
+<param value="$LOCALIZE[31019]" name="widget_header"/>
+
+<param value="!String.IsEmpty(Window(weather).Property(Daily.IsFetched))" name="visible"/>
+
+</include>
+
+
+-<include condition="!String.IsEmpty(Weather.Plugin)" content="WeatherWidget">
+
+<param value="HourlyItems" name="content_include"/>
+
+<param value="15100" name="list_id"/>
+
+<param value="$LOCALIZE[33036]" name="widget_header"/>
+
+<param value="!String.IsEmpty(Window(weather).Property(Hourly.IsFetched))" name="visible"/>
+
+</include>
+
+</control>
+
+
+-<include condition="String.IsEmpty(Weather.plugin)" content="ImageWidget">
+
+<param value="$LOCALIZE[31120]" name="text_label"/>
+
+<param value="$LOCALIZE[31121]" name="button_label"/>
+
+<param name="left">50</param>
+
+<param value="ActivateWindow(servicesettings,weather)" name="button_onclick"/>
+
+<param value="15300" name="button_id"/>
+
+<param value="Skin.SetBool(HomeMenuNoWeatherButton)" name="button2_onclick"/>
+
+</include>
+
+
+-<include condition="Skin.HasSetting(touchmode)" content="WidgetScrollbar">
+
+<param value="15010" name="scrollbar_id"/>
+
+</include>
+
+</control>
+
+
+-<control type="group" id="16000">
+
+<visible>String.IsEqual(Container(9000).ListItem.Property(id),musicvideos)</visible>
+
+
+-<include content="Visible_Right_Delayed">
+
+<param value="musicvideos" name="id"/>
+
+</include>
+
+
+-<control type="grouplist" id="16001">
+
+<pagecontrol>16010</pagecontrol>
+
+
+-<include condition="Library.HasContent(musicvideos) + !Skin.HasSetting(home_no_categories_widget)" content="WidgetListCategory">
+
+<param value="library://video/musicvideos/" name="content_path"/>
+
+<param value="$LOCALIZE[31148]" name="widget_header"/>
+
+<param value="videos" name="widget_target"/>
+
+<param value="16900" name="list_id"/>
+
+</include>
+
+
+-<include condition="Library.HasContent(musicvideos) + !Skin.HasSetting(show_musicvideoposter)" content="WidgetListEpisodes">
+
+<param value="videodb://recentlyaddedmusicvideos/" name="content_path"/>
+
+<param value="$LOCALIZE[20390]" name="widget_header"/>
+
+<param value="videos" name="widget_target"/>
+
+<param value="$INFO[ListItem.Label]" name="main_label"/>
+
+<param value="$INFO[ListItem.Artist]" name="sub_label"/>
+
+<param value="$INFO[ListItem.Year]" name="thumb_label"/>
+
+<param value="DefaultMusicSongs.png" name="fallback_image"/>
+
+<param value="16300" name="list_id"/>
+
+</include>
+
+
+-<include condition="Library.HasContent(musicvideos) + Skin.HasSetting(show_musicvideoposter)" content="WidgetListPoster">
+
+<param value="videodb://recentlyaddedmusicvideos/" name="content_path"/>
+
+<param value="$LOCALIZE[20390]" name="widget_header"/>
+
+<param value="videos" name="widget_target"/>
+
+<param value="DefaultMusicSongs.png" name="fallback_image"/>
+
+<param value="16300" name="list_id"/>
+
+</include>
+
+
+-<include condition="Library.HasContent(musicvideos) + !Skin.HasSetting(show_musicvideoposter)" content="WidgetListEpisodes">
+
+<param value="special://skin/playlists/unwatched_musicvideos.xsp" name="content_path"/>
+
+<param value="$LOCALIZE[31151]" name="widget_header"/>
+
+<param value="videos" name="widget_target"/>
+
+<param value="$INFO[ListItem.Label]" name="main_label"/>
+
+<param value="$INFO[ListItem.Artist]" name="sub_label"/>
+
+<param value="$INFO[ListItem.Year]" name="thumb_label"/>
+
+<param value="DefaultMusicSongs.png" name="fallback_image"/>
+
+<param value="16400" name="list_id"/>
+
+</include>
+
+
+-<include condition="Library.HasContent(musicvideos) + Skin.HasSetting(show_musicvideoposter)" content="WidgetListPoster">
+
+<param value="special://skin/playlists/unwatched_musicvideos.xsp" name="content_path"/>
+
+<param value="$LOCALIZE[31151]" name="widget_header"/>
+
+<param value="videos" name="widget_target"/>
+
+<param value="DefaultMusicSongs.png" name="fallback_image"/>
+
+<param value="16400" name="list_id"/>
+
+</include>
+
+
+-<include condition="Library.HasContent(musicvideos)" content="WidgetListSquare">
+
+<param value="special://skin/playlists/random_musicvideo_artists.xsp" name="content_path"/>
+
+<param value="$LOCALIZE[31013]" name="widget_header"/>
+
+<param value="music" name="widget_target"/>
+
+<param value="16200" name="list_id"/>
+
+<param value="10" name="widget_limit"/>
+
+</include>
+
+
+-<include condition="Library.HasContent(musicvideos) + !Skin.HasSetting(show_musicvideoposter)" content="WidgetListEpisodes">
+
+<param value="special://skin/playlists/random_musicvideos.xsp" name="content_path"/>
+
+<param value="$LOCALIZE[31152]" name="widget_header"/>
+
+<param value="videos" name="widget_target"/>
+
+<param value="$INFO[ListItem.Label]" name="main_label"/>
+
+<param value="$INFO[ListItem.Artist]" name="sub_label"/>
+
+<param value="$INFO[ListItem.Year]" name="thumb_label"/>
+
+<param value="DefaultMusicSongs.png" name="fallback_image"/>
+
+<param value="16500" name="list_id"/>
+
+</include>
+
+
+-<include condition="Library.HasContent(musicvideos) + Skin.HasSetting(show_musicvideoposter)" content="WidgetListPoster">
+
+<param value="special://skin/playlists/random_musicvideos.xsp" name="content_path"/>
+
+<param value="$LOCALIZE[31152]" name="widget_header"/>
+
+<param value="videos" name="widget_target"/>
+
+<param value="DefaultMusicSongs.png" name="fallback_image"/>
+
+<param value="16500" name="list_id"/>
+
+</include>
+
+
+-<include condition="Library.HasContent(musicvideos)" content="WidgetListCategory">
+
+<param value="videodb://musicvideos/studios/" name="content_path"/>
+
+<param value="$LOCALIZE[20388]" name="widget_header"/>
+
+<param value="music" name="widget_target"/>
+
+<param value="16600" name="list_id"/>
+
+<param value="$VAR[WidgetStudioIconVar]" name="icon"/>
+
+<param value="70" name="icon_height"/>
+
+</include>
+
+</control>
+
+
+-<include condition="!Library.HasContent(musicvideos)" content="ImageWidget">
+
+<param value="$LOCALIZE[31104]" name="text_label"/>
+
+<param name="left">50</param>
+
+<param value="$LOCALIZE[31110]" name="button_label"/>
+
+<param value="ActivateWindow(videos,files,return)" name="button_onclick"/>
+
+<param value="16800" name="button_id"/>
+
+<param value="Skin.SetBool(HomeMenuNoMusicVideoButton)" name="button2_onclick"/>
+
+</include>
+
+
+-<include condition="Skin.HasSetting(touchmode)" content="WidgetScrollbar">
+
+<param value="16010" name="scrollbar_id"/>
+
+</include>
+
+</control>
+
+
+-<control type="group" id="4000">
+
+<visible>String.IsEqual(Container(9000).ListItem.Property(id),pictures)</visible>
+
+
+-<include content="Visible_Right_Delayed">
+
+<param value="pictures" name="id"/>
+
+</include>
+
+
+-<control type="grouplist" id="4001">
+
+<include>WidgetGroupListCommon</include>
+
+
+-<include condition="!Skin.HasSetting(HomeMenuNoPicturesButton)" content="WidgetListCategory">
+
+<param value="sources://pictures/" name="content_path"/>
+
+<param value="$LOCALIZE[20094]" name="widget_header"/>
+
+<param value="pictures" name="widget_target"/>
+
+<param value="4100" name="list_id"/>
+
+<param value="110" name="icon_height"/>
+
+</include>
+
+</control>
+
+</control>
+
+
+-<control type="group" id="17000">
+
+<visible>String.IsEqual(Container(9000).ListItem.Property(id),games)</visible>
+
+
+-<include content="Visible_Right_Delayed">
+
+<param value="games" name="id"/>
+
+</include>
+
+
+-<control type="grouplist" id="17001">
+
+<include>WidgetGroupListCommon</include>
+
+<pagecontrol>17010</pagecontrol>
+
+
+-<include content="WidgetListSquare">
+
+<param value="addons://sources/game/" name="content_path"/>
+
+<param value="$LOCALIZE[35049]" name="widget_header"/>
+
+<param value="games" name="widget_target"/>
+
+<param value="lastused" name="sortby"/>
+
+<param value="descending" name="sortorder"/>
+
+<param value="17200" name="list_id"/>
+
+<param value="DefaultAddonGame.png" name="fallback_icon"/>
+
+</include>
+
+</control>
+
+
+-<include content="ImageWidget">
+
+<param value="$LOCALIZE[31162]" name="text_label"/>
+
+<param value="$LOCALIZE[31144]" name="button_label"/>
+
+<param value="ActivateWindow(addonbrowser,addons://default_binary_addons_source/category.gameaddons,return)" name="button_onclick"/>
+
+<param value="17100" name="button_id"/>
+
+<param name="left">50</param>
+
+<param value="!Integer.IsGreater(Container(17001).NumItems,0)" name="visible"/>
+
+<param value="Skin.SetBool(HomeMenuNoGamesButton)" name="button2_onclick"/>
+
+</include>
+
+
+-<include condition="Skin.HasSetting(touchmode)" content="WidgetScrollbar">
+
+<param value="17010" name="scrollbar_id"/>
+
+</include>
+
+</control>
+
+
+-<control type="group" id="21000">
+
+<visible>String.IsEqual(Container(9000).ListItem.Property(id),disc)</visible>
+
+
+-<include content="Visible_Right_Delayed">
+
+<param value="disc" name="id"/>
+
+</include>
+
+
+-<include content="ImageWidget">
+
+<param value="$INFO[System.DVDLabel]" name="text_label"/>
+
+<param name="left">50</param>
+
+<param value="$LOCALIZE[341]" name="button_label"/>
+
+<param value="PlayDisc" name="button_onclick"/>
+
+<param value="21100" name="button_id"/>
+
+<param value="true" name="visible"/>
+
+<param value="$LOCALIZE[13391]" name="button2_label"/>
+
+<param value="EjectTray()" name="button2_onclick"/>
+
+<param value="$LOCALIZE[600]" name="button3_label"/>
+
+<param value="RipCD" name="button3_onclick"/>
+
+<param value="System.HasMediaAudioCD" name="visible_3"/>
+
+</include>
+
+</control>
+
+</control>
+
+
+-<include content="TopBar">
+
+<param value="" name="breadcrumbs_label"/>
+
+</include>
+
+<include>BottomBar</include>
+
+
+-<control type="group">
+
+<visible>!Skin.HasSetting(TrailerPlaying)</visible>
+
+<animation time="700" end="0,0" effect="slide" start="-492,0" tween="sine" easing="inout">VisibleChange</animation>
+
+<depth>DepthContentPanel</depth>
+
+<include>OpenClose_Left</include>
+
+
+-<include content="ContentPanel">
+
+<param value="900" name="width"/>
+
+</include>
+
+
+-<control type="group">
+
+<animation time="300" end="0,0" effect="slide" start="-492,0" tween="sine" easing="inout">VisibleChange</animation>
+
+<visible allowhiddenfocus="true">![String.IsEqual(ListItem.DBtype,movie) | String.IsEqual(ListItem.DBtype,tvshow) | String.IsEqual(ListItem.DBtype,season) | String.IsEqual(ListItem.DBtype,episode)]</visible>
+
+<!-- TODO Add sideblade panel for direct editing of widgets, hiding sections, other shortcuts -->
+
+
+
+-<control type="fixedlist" id="9000">
+
+<left>25</left>
+
+<top>240</top>
+
+<width>492</width>
+
+<bottom>-10</bottom>
+
+<movement>7</movement>
+
+<focusposition>0</focusposition>
+
+<onfocus>ClearProperty(listposition,home)</onfocus>
+
+<onright>SetFocus($INFO[Container(9000).ListItem.Property(menu_id)])</onright>
+
+<onup>700</onup>
+
+<ondown>700</ondown>
+
+<scrolltime tween="cubic" easing="out">500</scrolltime>
+
+
+-<focusedlayout height="95">
+
+
+-<control type="group">
+
+<animation time="0" end="0" effect="fade" start="100">UnFocus</animation>
+
+</control>
+
+<!-- SideMenu Focused Icons -->
+
+
+
+-<control type="label">
+
+<include>FocusBounce</include>
+
+<left>65</left>
+
+<top>0</top>
+
+<height>95</height>
+
+<width>315</width>
+
+<aligny>center</aligny>
+
+<font>font45</font>
+
+<textcolor>darkgrey</textcolor>
+
+<label>$INFO[ListItem.Label]</label>
+
+<shadowcolor>text_shadow</shadowcolor>
+
+<visible>ControlGroup(700).HasFocus</visible>
+
+</control>
+
+
+-<control type="label">
+
+<include>FocusBounce</include>
+
+<left>65</left>
+
+<top>0</top>
+
+<height>95</height>
+
+<width>315</width>
+
+<aligny>center</aligny>
+
+<font>font52_title</font>
+
+<label>$INFO[ListItem.Label]</label>
+
+<textcolor>unfocused_text</textcolor>
+
+<shadowcolor>text_shadow</shadowcolor>
+
+<visible>!ControlGroup(700).HasFocus</visible>
+
+</control>
+
+</focusedlayout>
+
+
+-<itemlayout height="90">
+
+
+-<control type="label">
+
+<left>65</left>
+
+<top>0</top>
+
+<height>95</height>
+
+<width>315</width>
+
+<aligny>center</aligny>
+
+<font>font45</font>
+
+<textcolor>darkgrey</textcolor>
+
+<label>$INFO[ListItem.Label]</label>
+
+<shadowcolor>text_shadow</shadowcolor>
+
+</control>
+
+</itemlayout>
+
+
+-<content>
+
+<!-- MOVIES 19000 -->
+
+
+<include condition="!Skin.HasSetting(HomeMenuNoMoviesButton)" content="MoviesMainMenu"/>
+
+<!-- TVSHOWS 22000 -->
+
+
+<include condition="!Skin.HasSetting(HomeMenuNoTVShowsButton)" content="TVShowsMainMenu"/>
+
+<!-- CUSTOM 1 23000 -->
+
+
+<include condition="!Skin.HasSetting(HomeMenuNoCustom1Button)" content="Custom1MainMenu"/>
+
+<!-- CUSTOM 2 24000 -->
+
+
+<include condition="!Skin.HasSetting(HomeMenuNoCustom2Button)" content="Custom2MainMenu"/>
+
+<!-- CUSTOM 3 25000 -->
+
+
+<include condition="!Skin.HasSetting(HomeMenuNoCustom3Button)" content="Custom3MainMenu"/>
+
+
+-<item>
+
+<label>$LOCALIZE[2]</label>
+
+<onclick>ActivateWindow(Music,root,return)</onclick>
+
+<property name="menu_id">$NUMBER[7000]</property>
+
+<thumb>icons/sidemenu/music.png</thumb>
+
+<property name="id">music</property>
+
+<visible>!Skin.HasSetting(HomeMenuNoMusicButton)</visible>
+
+</item>
+
+
+-<item>
+
+<label>$LOCALIZE[427]</label>
+
+<onclick>PlayDisc</onclick>
+
+<property name="menu_id">$NUMBER[21000]</property>
+
+<thumb>icons/sidemenu/disc.png</thumb>
+
+<property name="id">disc</property>
+
+<visible>System.HasMediaDVD</visible>
+
+</item>
+
+
+-<item>
+
+<label>$LOCALIZE[20389]</label>
+
+<property name="menu_id">$NUMBER[16000]</property>
+
+<onclick>ActivateWindow(Videos,musicvideos,return)</onclick>
+
+<thumb>icons/sidemenu/musicvideos.png</thumb>
+
+<property name="id">musicvideos</property>
+
+<visible>!Skin.HasSetting(HomeMenuNoMusicVideoButton)</visible>
+
+</item>
+
+
+-<item>
+
+<label>Live TV</label>
+
+<property name="menu_id">$NUMBER[12000]</property>
+
+<onclick>ActivateWindow(TVGuide)</onclick>
+
+<thumb>icons/sidemenu/livetv.png</thumb>
+
+<property name="id">livetv</property>
+
+<visible>!Skin.HasSetting(HomeMenuNoTVButton)</visible>
+
+</item>
+
+
+-<item>
+
+<label>$LOCALIZE[19021]</label>
+
+<property name="menu_id">$NUMBER[13000]</property>
+
+<onclick>ActivateWindow(RadioChannels)</onclick>
+
+<thumb>icons/sidemenu/radio.png</thumb>
+
+<property name="id">radio</property>
+
+<visible>!Skin.HasSetting(HomeMenuNoRadioButton)</visible>
+
+</item>
+
+
+-<item>
+
+<label>$LOCALIZE[15016]</label>
+
+<property name="menu_id">$NUMBER[17000]</property>
+
+<onclick>ActivateWindow(Games)</onclick>
+
+<thumb>icons/sidemenu/games.png</thumb>
+
+<property name="id">games</property>
+
+<visible>System.GetBool(gamesgeneral.enable) + !Skin.HasSetting(HomeMenuNoGamesButton)</visible>
+
+</item>
+
+
+-<item>
+
+<label>$LOCALIZE[24001]</label>
+
+<property name="menu_id">$NUMBER[8000]</property>
+
+<onclick>ActivateWindow(1100)</onclick>
+
+<thumb>icons/sidemenu/addons.png</thumb>
+
+<property name="id">addons</property>
+
+<visible>!Skin.HasSetting(HomeMenuNoProgramsButton)</visible>
+
+</item>
+
+
+-<item>
+
+<label>$LOCALIZE[1]</label>
+
+<onclick>ActivateWindow(Pictures)</onclick>
+
+<property name="menu_id">$NUMBER[4000]</property>
+
+<thumb>icons/sidemenu/pictures.png</thumb>
+
+<property name="id">pictures</property>
+
+<visible>!Skin.HasSetting(HomeMenuNoPicturesButton)</visible>
+
+</item>
+
+
+-<item>
+
+<label>$LOCALIZE[3]</label>
+
+<onclick>ActivateWindow(Videos,root)</onclick>
+
+<property name="menu_id">$NUMBER[11000]</property>
+
+<thumb>icons/sidemenu/videos.png</thumb>
+
+<property name="id">video</property>
+
+<visible>!Skin.HasSetting(HomeMenuNoVideosButton)</visible>
+
+</item>
+
+
+-<item>
+
+<label>$LOCALIZE[10134]</label>
+
+<onclick>ActivateWindow(favouritesbrowser)</onclick>
+
+<property name="menu_id">$NUMBER[14000]</property>
+
+<thumb>icons/sidemenu/favourites.png</thumb>
+
+<property name="id">favorites</property>
+
+<visible>!Skin.HasSetting(HomeMenuNoFavButton)</visible>
+
+</item>
+
+
+-<item>
+
+<label>$LOCALIZE[8]</label>
+
+<onclick condition="!String.IsEmpty(Weather.Plugin)">ActivateWindow(Weather)</onclick>
+
+<onclick condition="String.IsEmpty(Weather.Plugin)">ReplaceWindow(servicesettings,weather)</onclick>
+
+<property name="menu_id">$NUMBER[15000]</property>
+
+<thumb>icons/sidemenu/weather.png</thumb>
+
+<property name="id">weather</property>
+
+<visible>!Skin.HasSetting(HomeMenuNoWeatherButton)</visible>
+
+</item>
+
+</content>
+
+</control>
+
+
+-<control type="grouplist" id="700">
+
+<orientation>horizontal</orientation>
+
+<itemgap>0</itemgap>
+
+<left>45</left>
+
+<width>380</width>
+
+<height>110</height>
+
+<top>115</top>
+
+<onup>SetFocus(9000,99,absolute)</onup>
+
+<ondown>SetFocus(9000,0,absolute)</ondown>
+
+<onright>2000</onright>
+
+<align>justify</align>
+
+
+-<include condition="Skin.HasSetting(OneClickClose)" content="IconButton">
+
+<param value="801" name="control_id"/>
+
+<param value="Quit()" name="onclick"/>
+
+<param value="icons/power.png" name="icon"/>
+
+<param value="$LOCALIZE[33060]" name="label"/>
+
+</include>
+
+
+-<include condition="!Skin.HasSetting(OneClickClose)" content="IconButton">
+
+<param value="802" name="control_id"/>
+
+<param value="ActivateWindow(shutdownmenu)" name="onclick"/>
+
+<param value="icons/power.png" name="icon"/>
+
+<param value="$LOCALIZE[33060]" name="label"/>
+
+</include>
+
+
+-<include content="IconButton">
+
+<param value="803" name="control_id"/>
+
+<param value="ActivateWindow(settings)" name="onclick"/>
+
+<param value="icons/settings.png" name="icon"/>
+
+<param value="$LOCALIZE[21417]" name="label"/>
+
+</include>
+
+
+-<include condition="Skin.HasSetting(NoSearchResultsWindow)" content="IconButton">
+
+<param value="804" name="control_id"/>
+
+<param value="ActivateWindow(1107)" name="onclick"/>
+
+<param value="icons/search.png" name="icon"/>
+
+<param value="$LOCALIZE[137]" name="label"/>
+
+</include>
+
+
+-<include condition="!Skin.HasSetting(NoSearchResultsWindow) + Skin.HasSetting(DefaultSearchWindowBehavior)" content="IconButton">
+
+<param value="805" name="control_id"/>
+
+<param value="RunScript(script.fentastic.helper,mode=search_input)" name="onclick"/>
+
+<param value="icons/search.png" name="icon"/>
+
+<param value="$LOCALIZE[137]" name="label"/>
+
+</include>
+
+
+-<include condition="!Skin.HasSetting(NoSearchResultsWindow) + !Skin.HasSetting(DefaultSearchWindowBehavior)" content="IconButton">
+
+<param value="806" name="control_id"/>
+
+<param value="RunScript(script.fentastic.helper,mode=open_search_window)" name="onclick"/>
+
+<param value="icons/search.png" name="icon"/>
+
+<param value="$LOCALIZE[137]" name="label"/>
+
+</include>
+
+
+-<include content="IconButton">
+
+<param value="807" name="control_id"/>
+
+<param value="Fullscreen" name="onclick"/>
+
+<param value="icons/now-playing/fullscreen.png" name="icon"/>
+
+<param value="$LOCALIZE[31000]" name="label"/>
+
+<param value="Player.HasMedia" name="visible"/>
+
+</include>
+
+</control>
+
+</control>
+
+
+-<control type="group">
+
+<animation time="300" end="0,0" effect="slide" start="-492,0" tween="sine" easing="inout">VisibleChange</animation>
+
+<width>550</width>
+
+<visible>String.IsEqual(ListItem.DBtype,movie) | String.IsEqual(ListItem.DBtype,tvshow) | String.IsEqual(ListItem.DBtype,season) | String.IsEqual(ListItem.DBtype,episode)</visible>
+
+<include>OpenClose_Left</include>
+
+
+-<control type="image">
+
+<left>30</left>
+
+<top>50</top>
+
+<width>395</width>
+
+<height>153</height>
+
+<texture background="true">$VAR[ClearlogoVar]</texture>
+
+<aspectratio align="center">keep</aspectratio>
+
+</control>
+
+
+-<control type="textbox">
+
+<top>75</top>
+
+<left>30</left>
+
+<width>430</width>
+
+<aligny>center</aligny>
+
+<height>98</height>
+
+<font>font36_title</font>
+
+<label>$INFO[ListItem.Label]</label>
+
+<visible>String.IsEmpty(ListItem.Art(clearlogo))</visible>
+
+</control>
+
+
+-<control type="group">
+
+<visible>Skin.HasSetting(Disable.RatingsINF) | String.IsEmpty(Skin.String(mdblist_api_key))</visible>
+
+
+-<control type="textbox">
+
+<left>30</left>
+
+<top>239</top>
+
+<width>410</width>
+
+<bottom>60</bottom>
+
+<label>$VAR[InfoPanel]</label>
+
+<textcolor>unfocused_text</textcolor>
+
+<autoscroll time="3000" repeat="10000" delay="10000">Skin.HasSetting(autoscroll)</autoscroll>
+
+</control>
+
+
+-<control type="textbox">
+
+<left>30</left>
+
+<top>323</top>
+
+<width>410</width>
+
+<bottom>60</bottom>
+
+<label>$VAR[InfoPanelEpisode]</label>
+
+<textcolor>unfocused_text</textcolor>
+
+<autoscroll time="3000" repeat="10000" delay="10000">Skin.HasSetting(autoscroll)</autoscroll>
+
+</control>
+
+
+-<control type="textbox">
+
+<left>30</left>
+
+<top>213</top>
+
+<width>410</width>
+
+<aligny>center</aligny>
+
+<height>110</height>
+
+<bottom>60</bottom>
+
+<font>font36_title</font>
+
+<label>Season $INFO[ListItem.Season], Episode $INFO[ListItem.Episode]</label>
+
+<visible>String.IsEqual(ListItem.DbType,episode)</visible>
+
+</control>
+
+</control>
+
+
+-<include condition="![Skin.HasSetting(Disable.RatingsINF) | String.IsEmpty(Skin.String(mdblist_api_key))]" content="RatingsInfoPanel">
+
+<param value="30" name="left"/>
+
+<param value="410" name="width"/>
+
+<param value="239" name="top"/>
+
+<param value="7" name="ratings_spacing"/>
+
+<param value="460" name="height_noalt"/>
+
+<param value="330" name="height_alt_movie"/>
+
+<param value="290" name="height_alt_tvshow"/>
+
+</include>
+
+<!-- <control type="textbox"> <left>30</left> <top>467</top> <width>530</width> <height>413</height> <align>center</align> <aligny>center</aligny> <font>font27</font> <textcolor>80FFFFFF</textcolor> <label>$LOCALIZE[19055]</label> <visible>String.IsEmpty(Listitem.Plot) + String.IsEmpty(Listitem.Tagline) + !ListItem.IsCollection + !ListItem.IsParentFolder</visible> </control> -->
+
+
+</control>
+
+</control>
+
+
+-<control type="group">
+
+<depth>DepthBars</depth>
+
+<bottom>0</bottom>
+
+<height>70</height>
+
+<animation time="300" end="100" effect="fade" start="0" delay="300">WindowOpen</animation>
+
+<animation time="200" end="0" effect="fade" start="100">WindowClose</animation>
+
+
+-<include condition="!Skin.HasSetting(hide_mediaflags)" content="MediaFlags">
+
+<param value="Container." name="infolabel_prefix"/>
+
+<param value="$VAR[ContainerResolutionFlagVar]" name="resolution_var"/>
+
+</include>
+
+
+-<control type="rss">
+
+<animation condition="$EXP[infodialog_active]" time="300" end="0,90" effect="slide" tween="sine" easing="inout">conditional</animation>
+
+<left>0</left>
+
+<bottom>0</bottom>
+
+<height>39</height>
+
+<width>100%</width>
+
+<font>font12</font>
+
+<urlset>1</urlset>
+
+<hitrect h="1" w="1" y="0" x="-100"/>
+
+<titlecolor>button_focus</titlecolor>
+
+<textcolor>button_focus</textcolor>
+
+<shadowcolor>text_shadow</shadowcolor>
+
+<headlinecolor>FFC0C0C0</headlinecolor>
+
+<visible>Skin.HasSetting(hide_mediaflags) | !ControlGroup(2000).HasFocus</visible>
+
+<animation time="300" effect="fade">VisibleChange</animation>
+
+</control>
+
+</control>
+
+
+-<control type="group">
+
+<animation time="300" end="0,0" effect="slide" start="-492,0" tween="sine" easing="inout">VisibleChange</animation>
+
+<visible>![String.IsEqual(ListItem.DBtype,movie) | String.IsEqual(ListItem.DBtype,tvshow) | String.IsEqual(ListItem.DBtype,season) | String.IsEqual(ListItem.DBtype,episode)] + !Skin.HasSetting(TrailerPlaying)</visible>
+
+<depth>DepthBars</depth>
+
+<animation condition="$EXP[infodialog_active]" time="300" end="0,-90" effect="slide" tween="sine" easing="inout">conditional</animation>
+
+<animation time="300" end="100" effect="fade" start="0">WindowOpen</animation>
+
+<animation time="200" end="0" effect="fade" start="100">WindowClose</animation>
+
+<top>35</top>
+
+<left>35</left>
+
+
+-<control type="image">
+
+<left>19</left>
+
+<top>0</top>
+
+<aspectratio>keep</aspectratio>
+
+<width>130</width>
+
+<height>56</height>
+
+<texture colordiffuse="accent_color">special://skin/media/logos/K-logo.png</texture>
+
+</control>
+
+
+-<control type="image">
+
+<left>59</left>
+
+<top>0</top>
+
+<aspectratio>keep</aspectratio>
+
+<width>192</width>
+
+<height>56</height>
+
+<texture colordiffuse="unfocused_text">special://skin/media/logos/letters.png</texture>
+
+</control>
+
+</control>
+
+</control>
+
+</controls>
+
+</window>
