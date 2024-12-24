@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
 	<defaultcontrol>9000</defaultcontrol>
@@ -71,6 +72,22 @@
 					<control type="grouplist" id="19001">
 						<include>WidgetGroupListCommon</include>
 						<pagecontrol>19099</pagecontrol>
+						<include content="MovieWidgets" condition="!Skin.HasSetting(HomeMenuNoMoviesButton)" />
+					</control>
+					<include content="WidgetScrollbar" condition="Skin.HasSetting(touchmode)">
+						<param name="scrollbar_id" value="19099"/>
+					</include>
+				</control>
+				<!-- TV SHOWS -->
+				
+				<control type="group" id="22000">
+					<visible>String.IsEqual(Container(9000).ListItem.Property(id),tvshows)</visible>
+					<include content="Visible_Right_Delayed">
+						<param name="id" value="tvshows"/>
+					</include>
+				<control type="grouplist" id="22001">
+						<include>WidgetGroupListCommon</include>
+						<pagecontrol>22099/pagecontrol>
 						<include content="WidgetListCategories" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_categories_widget)">
 							<param name="content_path" value="library://video/movies/"/>
 							<param name="widget_header" value="$LOCALIZE[31148]"/>
@@ -101,57 +118,9 @@
 							<param name="widget_target" value="videos"/>
 							<param name="list_id" value="5400"/>
 						</include>
-						<include content="WidgetListCategories" condition="Library.HasContent(movies)">
-							<param name="content_path" value="videodb://movies/genres/"/>
-							<param name="widget_header" value="$LOCALIZE[135]"/>
-							<param name="widget_target" value="videos"/>
-							<param name="list_id" value="5500"/>
-							<param name="icon" value="$VAR[WidgetGenreIconVar]"/>
-							<param name="icon_height" value="70"/>
-						</include>
-						<include content="WidgetListPoster" condition="Library.HasContent(movies)">
-							<param name="content_path" value="videodb://movies/sets/"/>
-							<param name="widget_header" value="$LOCALIZE[31075]"/>
-							<param name="widget_target" value="videos"/>
-							<param name="sortby" value="random"/>
-							<param name="list_id" value="5600"/>
-						</include>
-					</control>
-					<include content="ImageWidget" condition="!Library.HasContent(movies)">
-						<param name="text_label" value="$LOCALIZE[31104]" />
-						<param name="button_label" value="$LOCALIZE[31110]" />
-						<param name="button_onclick" value="ActivateWindow(videos,files,return)"/>
-						<param name="button_id" value="5500"/>
-						<param name="button2_onclick" value="Skin.SetBool(HomeMenuNoMovieButton)"/>
-					</include>
-					<include content="WidgetScrollbar" condition="Skin.HasSetting(touchmode)">
-						<param name="scrollbar_id" value="5010"/>
-					</include>
-				</control>
-					<control type="grouplist" id="19001">
-						<include>WidgetGroupListCommon</include>
-						<pagecontrol>19099</pagecontrol>
-						<include content="MovieWidgets" condition="!Skin.HasSetting(HomeMenuNoMoviesButton)" />
-					</control>
-					<include content="WidgetScrollbar" condition="Skin.HasSetting(touchmode)">
-						<param name="scrollbar_id" value="19099"/>
-					</include>
-				</control>
-				<!-- TV SHOWS -->
-				<control type="group" id="22000">
-					<visible>String.IsEqual(Container(9000).ListItem.Property(id),tvshows)</visible>
-					<include content="Visible_Right_Delayed">
-						<param name="id" value="tvshows"/>
-					</include>
-					<control type="grouplist" id="22001">
-						<include>WidgetGroupListCommon</include>
-						<pagecontrol>22099</pagecontrol>
-						<include content="TVShowWidgets" condition="!Skin.HasSetting(HomeMenuNoTVShowsButton)" />
-					</control>
-					<include content="WidgetScrollbar" condition="Skin.HasSetting(touchmode)">
-						<param name="scrollbar_id" value="22099"/>
-					</include>
-				</control>
+					
+
+
 				<!-- CUSTOM 1 -->
 				<control type="group" id="23000">
 					<visible>String.IsEqual(Container(9000).ListItem.Property(id),custom1)</visible>
