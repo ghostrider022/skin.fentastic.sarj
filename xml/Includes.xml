@@ -1327,6 +1327,13 @@
 		<width>100%</width>
 		<height>100%</height>
 	</include>
+		<include name="NetflixScreenDimensions">
+		<right>-3</right>
+		<top>-3</top>
+		<width>1300</width>
+		<height>731</height>
+	</include>
+
 	<include name="FocusableProgressBar">
 		<param name="width">100%</param>
 		<param name="onunfocus_id">200</param>

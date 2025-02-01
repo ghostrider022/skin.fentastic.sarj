@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
-	<defaultcontrol>9000</defaultcontrol>
+	<defaultcontrol>19100</defaultcontrol>
 	<backgroundcolor>background</backgroundcolor>
 	<onload condition="!Skin.HasSetting(firsttimerun)">ActivateWindow(1112)</onload>
   <onload condition="Skin.HasSetting(firsttimerun)">RunScript(script.fentastic.helper,mode=check_for_update&amp;skin_id=skin.fentastic)</onload>
@@ -14,23 +14,33 @@
 	<onload condition="String.IsEmpty(Skin.String(DefaultFanartBrightness))">Skin.SetString(DefaultFanartBrightness,Medium)</onload>
 	<controls>
 		<include>DefaultBackground</include>
-		<control type="multiimage">
+		<!--<control type="multiimage">
 			<depth>DepthBackground</depth>
-			<include>FullScreenDimensions</include>
-			<aspectratio>scale</aspectratio>
+			<include>NetflixScreenDimensions</include>
+			<aspectratio></aspectratio>
 			<fadetime>600</fadetime>
 			<animation effect="zoom" center="auto" end="102,102" time="0" condition="Integer.IsGreater(System.StereoscopicMode,0)">conditional</animation>
 			<animation effect="fade" start="0" end="100" time="400">WindowOpen</animation>
 			<animation effect="fade" start="100" end="0" time="300">WindowClose</animation>
 			<animation effect="fade" time="400">VisibleChange</animation>
-			<imagepath background="true" colordiffuse="bg_overlay">$VAR[HomeFanartVar]</imagepath>
+			<!--<imagepath background="true" colordiffuse="bg_overlay">$VAR[HomeFanartVar]</imagepath>--
+			<imagepath background="true" diffuse="overlays/netflixfanartdiffuse.png">$VAR[HomeFanartVar]</imagepath>
 			<visible>!Player.HasMedia</visible>
-		</control>
+		</control>-->
+		<control type="multiimage">
+				<include>NetflixScreenDimensions</include>
+				<aspectratio>stretch</aspectratio>
+				<fadetime>500</fadetime>
+				<include>ArtworkAnimations</include>
+				<imagepath background="true" diffuse="overlays/netflixfanartdiffuse.png">$VAR[HomeFanartVar]</imagepath>
+				<visible>!Player.HasMedia</visible>
+			</control>
 		<control type="group">
 			<animation effect="fade" start="100" end="0" time="200" tween="sine" condition="$EXP[infodialog_active]">Conditional</animation>
 			<!-- WIDGETS GROUP -->
 			<control type="group" id="2000">
-				<left>462</left>
+				<left>0</left>
+				<top>650</top>
 				<include>OpenClose_Right</include>
 				<visible>!Skin.HasSetting(TrailerPlaying)</visible>
 				<animation effect="slide" time="700" start="1380,0" end="0,0" tween="sine" easing="inout">VisibleChange</animation>
@@ -68,10 +78,20 @@
 					<include content="Visible_Right_Delayed">
 						<param name="id" value="movies"/>
 					</include>
+					
+      
 					<control type="grouplist" id="19001">
 						<include>WidgetGroupListCommon</include>
 						<pagecontrol>19099</pagecontrol>
+						<include content="WidgetListBigLandscape">
+				<animation effect="slide" end="0,-120" time="200" condition="Control.IsVisible(19100)">Conditional</animation>
+       <param name="content_path" value="special://userdata/playlists/video/tm.xsp"/>
+       <param name="widget_header" value="Trending Movies"/>
+       <param name="widget_target" value="videos"/>
+    <param name="list_id" value="19100"/>
+	 </include>
 						<include content="MovieWidgets" condition="!Skin.HasSetting(HomeMenuNoMoviesButton)" />
+						
 					</control>
 					<include content="WidgetScrollbar" condition="Skin.HasSetting(touchmode)">
 						<param name="scrollbar_id" value="19099"/>
@@ -828,12 +848,12 @@
 				</include>
 				<control type="group">
 					<animation effect="slide" time="300" start="-492,0" end="0,0" tween="sine" easing="inout">VisibleChange</animation>
-					<visible allowhiddenfocus="true">![String.IsEqual(ListItem.DBtype,movie) | String.IsEqual(ListItem.DBtype,tvshow) | String.IsEqual(ListItem.DBtype,season) | String.IsEqual(ListItem.DBtype,episode)]</visible>
+					<visible allowhiddenfocus="false">![String.IsEqual(ListItem.DBtype,movie) | String.IsEqual(ListItem.DBtype,tvshow) | String.IsEqual(ListItem.DBtype,season) | String.IsEqual(ListItem.DBtype,episode)]</visible>
 					<!-- TODO Add sideblade panel for direct editing of widgets, hiding sections, other shortcuts -->
 					<control type="fixedlist" id="9000">
 						<left>25</left>
 						<top>240</top>
-            <width>492</width>
+            <width>4.92</width>
 						<bottom>-10</bottom>
 						<movement>7</movement>
 						<focusposition>0</focusposition>
@@ -993,7 +1013,7 @@
 						<orientation>horizontal</orientation>
 						<itemgap>0</itemgap>
             <left>45</left>
-						<width>380</width>
+						<width>3.80</width>
 						<height>110</height>
 						<top>115</top>
 						<onup>SetFocus(9000,99,absolute)</onup>
@@ -1074,8 +1094,9 @@
 						<control type="textbox">
 							<left>30</left>
 							<top>239</top>
-							<width>410</width>
-							<bottom>60</bottom>
+							<width>710</width>
+							<height>360</height>
+							<bottom>100</bottom>
 							<label>$VAR[InfoPanel]</label>
 							<textcolor>unfocused_text</textcolor>
 							<autoscroll delay="10000" time="3000" repeat="10000">Skin.HasSetting(autoscroll)</autoscroll>

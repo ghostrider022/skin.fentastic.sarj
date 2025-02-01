@@ -19,7 +19,7 @@
 		<definition>
 			<control type="group" id="$PARAM[list_id]665">
 				<left>75</left>
-				<top>80</top>
+				<top>100</top> <!--80-->
 				<onback>9000</onback>
 				<height>90</height>
 				<width>1350</width>
@@ -730,7 +730,7 @@
 				<movement>2</movement>
 				<visible>Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating</visible>
 				<right>0</right>
-				<height>366</height>
+				<height>370</height>
 				<onclick condition="$PARAM[onclick_condition]">$PARAM[onclick_action]</onclick>
 				<include content="WidgetListCommon">
 					<param name="list_id" value="$PARAM[list_id]"/>
@@ -821,7 +821,7 @@
 			</include>
 			<control type="fixedlist" id="$PARAM[list_id]">
 				<left>0</left>
-				<top>115</top>
+				<top>0</top> <!--115-->
 				<onright>$PARAM[list_id]</onright>
 				<orientation>horizontal</orientation>
 				<movement>2</movement>
